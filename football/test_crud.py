@@ -7,9 +7,6 @@
 import pytest
 from datetime import date
 
-from sqlalchemy.orm import Session, joinedload
-import models
-
 import crud
 from database import SessionLocal
 
@@ -68,24 +65,30 @@ def test_get_teams(db_session):
     teams = crud.get_teams(db_session, skip=0, limit=10000, min_last_changed_date=test_date)
     assert len(teams) == 20
 
+def test_get_teams_for_one_league(db_session):
+    """리그 id가 5001번인 것 확인"""
+    teams = crud.get_teams(db_session, league_id=5001)
+    assert len(teams) == 12
+    assert teams[0].league_id == 5001
 
-
-
-
-
+def test_get_team_players(db_session):
+    """팀 기록에서 선수를 조회할 수 있으며, 첫 번째 팀에 7명의 선수가 있는지 확인"""
+    first_team = crud.get_teams(db_session, skip=0, limit=1000,
+                                min_last_changed_date=test_date)[0]
+    assert len(first_team.players) == 7
 
 # 분석 쿼리 (단순 카운트)
-def get_player_count(db:Session):
-    """전체 선수 수"""
-    query = db.query(models.Player)
-    return query.count()
+def test_get_player_count(db_session):
+    """전체 선수 수 : 1018"""
+    player_count = crud.get_player_count(db_session)
+    assert player_count == 1018
 
-def get_team_count(db:Session):
-    """전체 팀 수"""
-    query = db.query(models.Team)
-    return query.count()
+def test_get_team_count(db_session):
+    """전체 팀 수 : 20"""
+    team_count = crud.get_team_count(db_session)
+    assert team_count == 20
 
-def get_league_count(db:Session):
-    """전체 리그 수"""
-    query = db.query(models.League)
-    return query.count()
+def test_get_league_count(db_session):
+    """전체 리그 수 : 5"""
+    league_count = crud.get_league_count(db_session)
+    assert league_count == 5

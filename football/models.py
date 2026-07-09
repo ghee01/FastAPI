@@ -27,7 +27,7 @@ class Player(Base):
     last_changed_date = Column(Date, nullable=False)
 
     # 1:N (선수:성적)
-    performances = relationship("Performance", back_populates='player')
+    performance = relationship("Performance", back_populates='player')
 
     # N:M (선수:팀)
     teams = relationship("Team", secondary='team_player', back_populates='players')
