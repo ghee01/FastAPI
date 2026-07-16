@@ -59,7 +59,7 @@ class Team(TeamBase):
     model_config = ConfigDict(from_attributes=True)
 
     # Team 응답에는 이 팀에 속한 선수 목록을 함께 담을 수 있다
-    players = List[PlayerBase] = Field(default_factory=list)
+    players: List[PlayerBase] = Field(default_factory=list)
 
 # 리그 응답 - 리그 기본 정보와 소속 팀 목록을 함께 반환
 class League(BaseModel):
