@@ -21,7 +21,10 @@ st.divider()
 submit = st.button('제출하기', type='secondary')
 
 if submit:
-    st.info('제출이 완료되었습니다. 참여해주셔서 감사합니다.')
-    st.text(f'응답자: {name}')
-    st.text(f'관심 분야: {", ".join(field)}')
-    st.text(f'만족도: {satisfaction}/10')
+    if name and field:
+        st.success('제출이 완료되었습니다. 참여해주셔서 감사합니다.')
+        st.text(f'응답자: {name}')
+        st.text(f'관심 분야: {", ".join(field)}')
+        st.text(f'만족도: {satisfaction}/10')
+    else:
+        st.error('이름과 관심 분야를 모두 입력해주세요')

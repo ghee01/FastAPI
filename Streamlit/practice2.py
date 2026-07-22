@@ -12,25 +12,28 @@ file = st.file_uploader(
 if file is not None:
     st.write('업로드 된 데이터 미리보기')
     df = pd.read_csv(file)
-    st.write(df)
+    st.dataframe(df)
     
     st.divider()
 
     select_col = st.multiselect('확인하고 싶은 열을 선택하세요', df.columns)
-    filter_col = st.selectbox('범위로 필터링할 열을 선택하세요', df.columns)
+    numeric_col = df.select_dtypes(include='number').columns.tolist()
+    if numeric_col:
+        filter_col = st.selectbox('범위로 필터링할 열을 선택하세요', numeric_col)
 
-    if filter_col == '가격':
-        min_price, max_price = st.slider(
-            '가격 범위 선택',
-            min_value=3000,
-            max_value=6000,
-            value=(3000, 6000),
-            step=500
+        min_val = int(df[filter_col].min())
+        max_val = int(df[filter_col].max())
+
+        start_val, end_val = st.slider(
+            f'{filter_col} 범위 선택',
+            min_value=min_val,
+            max_value=max_val,
+            value=(min_val, max_val)
         )
 
         st.divider()
 
-        result = df[(df[filter_col] >= min_price) & (df[filter_col] <= max_price)]
+        result = df[(df[filter_col] >= start_val) & (df[filter_col] <= end_val)]
         result = result[select_col]
         st.text(f'필터링 결과 ({len(result)}건)')
         st.write(result)
