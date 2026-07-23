@@ -125,11 +125,11 @@ def get_teams(db: Session, skip: int=0, limit: int=100,
     )
 
     if min_last_changed_date:
-        stmt = stmt.where(models.League.last_changed_date >= min_last_changed_date)
+        stmt = stmt.where(models.Team.last_changed_date >= min_last_changed_date)
     if team_name:
         stmt = stmt.where(models.Team.team_name == team_name)
     if league_id:
-        stmt = stmt.where(models.League.league_id == league_id)
+        stmt = stmt.where(models.Team.league_id == league_id)
 
     stmt = stmt.offset(skip).limit(limit)
 
