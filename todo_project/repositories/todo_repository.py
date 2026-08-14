@@ -36,7 +36,7 @@ class TodoRepository:
         찾으면 Todo 객체 반환, 못찾으면 None 반환
         """
         stmt = select(Todo).where(Todo.id == todo_id, Todo.user_id == user_id)
-        return self.session.execute(stmt).scalars.first()
+        return self.session.execute(stmt).scalars().first()
 
     def save(self, todo: Todo) -> Todo:
         """
