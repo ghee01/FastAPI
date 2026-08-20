@@ -1,0 +1,13 @@
+{
+  "version": 5,
+  "trained_at": "2026-08-20T12:30:26",
+  "n_samples": 38,
+  "n_user_corrected": 13,
+  "accuracy": 0.0,
+  "categories": [
+    "개인",
+    "긴급",
+    "업무"
+  ],
+  "source": "original + user_corrected"
+}

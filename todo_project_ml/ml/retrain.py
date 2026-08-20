@@ -40,7 +40,7 @@ def load_user_corrected_data() -> pd.DataFrame:
         stmt = select(Todo.title, Todo.final_category).where(
             Todo.final_category.is_not(None)
         )
-        rows = stmt.execute(stmt).all()
+        rows = session.execute(stmt).all()
     finally:
         session.close()
 
