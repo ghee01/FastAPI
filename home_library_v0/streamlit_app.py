@@ -16,28 +16,30 @@ st.title('우리집 책장 (개발중)')
 
 image = st.file_uploader('표지 사진')
 
-if st.button('등록') and image: # 등록 버튼을 누르고, 사진도 등록되어 있으면
-    # requests.post(...) → FastAPI의 POST /books/scan 주소로 파일을 실어서 요청을 보낸다
-    # files={'image':(파일명, 파일내용바이트, 파일타입)} → FastAPI에 uploadFile 매개변수 image와 일치
-    r = requests.post(
-        f'{API}/books/scan',
-        files={'image':(image.name, image.getvalue(), image.type)}
-    )
+# if st.button('등록') and image: # 등록 버튼을 누르고, 사진도 등록되어 있으면
+#     # requests.post(...) → FastAPI의 POST /books/scan 주소로 파일을 실어서 요청을 보낸다
+#     # files={'image':(파일명, 파일내용바이트, 파일타입)} → FastAPI에 uploadFile 매개변수 image와 일치
+#     r = requests.post(
+#         f'{API}/books/scan',
+#         files={'image':(image.name, image.getvalue(), image.type)}
+#     )
 
-    st.success(f'등록됨: {r.json()["title"]}' if r.ok else st.error('실패'))
+#     st.success(f'등록됨: {r.json()["title"]}' if r.ok else st.error('실패'))
 
 # --- and image 없애고, 버튼 클릭 안쪽에서 image 유무를 명시적으로 분기 ---
-# if st.button('등록'):
-#     if image is None:
-#         # 사진이 없는데 등록을 눌렀을 때 → 경고
-#         st.warning('먼저 표지 사진을 선택해주세요')
-#     else:
-#         r = requests.post(
-#             f'{API}/books/scan',
-#             files={'image':(image.name, image.getvalue(), image.type)}
-#         )
-#         if r.ok:
-#             st.success(f'등록됨: {r.json()["title"]}' if r.ok else st.error('실패'))
+if st.button('등록'):
+    if image is None:
+        # 사진이 없는데 등록을 눌렀을 때 → 경고
+        st.warning('먼저 표지 사진을 선택해주세요')
+    else:
+        r = requests.post(
+            f'{API}/books/scan',
+            files={'image':(image.name, image.getvalue(), image.type)}
+        )
+        if r.ok:
+            st.success(f'등록됨: {r.json()["title"]}')
+        else:
+            st.error(f'실패: {r.status_code}')
 
 st.subheader('등록된 책')
 
