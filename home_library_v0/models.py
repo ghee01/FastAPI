@@ -5,7 +5,7 @@ home_library_v0/models.py
 스키마, 테이블 만들기 (ORM)
 '''
 
-from datetime import datetime
+from datetime import datetime, timezone
 # sqlalchemy의 String : 최대 길이 지정 / DB 쪽에서 길이 초과 시 에러가 나서 실수로 너무 긴 값이 들어가는 것을 막아주는 안전장치 역할
 # sqlalchemy의 Text : 길이 제한 X / 리뷰 본문처럼 얼마나 길어질지 예측하기 어려운 긴 글에 적합
 from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
@@ -33,7 +33,7 @@ class Book(Base):
     recognition_status: Mapped[str] = mapped_column(String(20), default='confirmed')
     # 이 책이 언제 등록되었는지 자동으로 기록
     # default=datetime.utc : 저장되는 순간의 시각으로 자동으로 채워준다
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utc)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # 관계 설정
     # cascade='all, delete-orphan' : 책이 삭제 되면 그 책의 독서 상태/리뷰도 같이 자동 삭제
