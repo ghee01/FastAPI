@@ -1,3 +1,8 @@
+'''
+main.py
+
+main 파일 실행 → `uvicorn main:app --reload`
+'''
 from fastapi import FastAPI
 from database import Base, engine
 from routers.ingredient import router as ingredient_router

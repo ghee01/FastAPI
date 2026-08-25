@@ -1,7 +1,6 @@
 '''
-Food / database.py
------------------------------
-예광탄 방식을 활용한 아주 얇은 코드
+database.py
+
 DB 연결 - PostgreSQL
 '''
 from sqlalchemy import create_engine
