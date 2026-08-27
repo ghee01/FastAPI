@@ -12,7 +12,7 @@ class IngredientCreate(BaseModel):
     category: str = Field(default="미분류", description="카테고리")
     quantity: str = Field(default="1", description="수량")
     purchase_date: date = Field(..., description='구매일 (YYYY-MM-DD)')
-    expiration_date: date = Field(default=None, description="유통기한 (YYYY-MM-DD)")
+    expiration_date: date = Field(..., description="유통기한 (YYYY-MM-DD)")
     storage_method: str = Field(default='냉장', description='보관 방법 (냉장/냉동/실온)')
 
     # mode='before' : 타입 검증 전 이 함수를 먼저 거친다
