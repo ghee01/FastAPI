@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
@@ -10,8 +11,8 @@ from datetime import date
 # --------------------------------------------------
 # FastAPI 서버 주소
 # --------------------------------------------------
-API_URL = "http://127.0.0.1:8000"
-
+# API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv('API_URL', 'http://localhost:8000')
 
 # --------------------------------------------------
 # 전체 식재료 조회 함수
